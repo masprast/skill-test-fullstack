@@ -1,0 +1,23 @@
+**/node_modules
+node_modules
+**/dist
+
+# IDEs and editors
+.idea/
+.project
+*.launch
+.settings/
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# private
+private
+compose
+tut
+conto
+**/install.sh

@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0.1-ubi8
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - datadb:/data/db
+      - ./../db/initdb.js:/docker-entrypoint-initdb.d/initdb.js:ro
+    env_file:
+      - ./../environment/local.env
+    environment:
+      # MONGODB_INITDB_DATABASE: ${MONGODB_DB}
+      MONGODB_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGODB_INITDB_ROOT_PASSWORD: ${MONGODB_PASS}
+
+volumes:
+  datadb:
