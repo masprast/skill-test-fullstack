@@ -1,10 +1,41 @@
-import { config } from 'dotenv';
-config({ path: './../environment/local.env' });
+import { createReadStream } from 'fs';
+import { parse } from 'csv';
+import { resolve } from 'path';
 
-db.getSiblingDB(process.env.MONGODB_DB);
-
+// use admin;
+db.getSiblingDB('admin');
+db.auth('$MONGODB_INITDB_ROOT_USERNAME', '$MONGODB_INITDB_ROOT_PASSWORD');
+// use backend;
+db.getSiblingDB('$MONGODB_INITDB_DATABASE');
 db.createUser({
-  user: process.env.MONGODB_USER,
-  pwd: process.env.MONGODB_PASS,
-  roles: [{ role: 'dbAdmin', db: process.env.MONGODB_DB }],
+  user: '$MONGODB_USER',
+  pwd: '$MONGODB_PASS',
+  roles: [
+    { role: 'dbOwner', db: '$MONGODB_INITDB_DATABASE' },
+    'readWriteAnyDatabase',
+  ],
 });
+db.grantRolesToUser('$MONGODB_USER', [{ role: 'root', db: 'admin' }]);
+
+db.createCollection('horoscope');
+db.createCollection('zodiac');
+
+createReadStream(resolve(__dirname, '../src/assets/data/ZodiacCalculation.csv'))
+  .pipe(parse({ delimiter: ',', from_line: 2 }))
+  .on('data', (baris) => {
+    db.zodiac.insert({
+      tanggal_awal: baris[0],
+      tanggal_akhir: baris[1],
+      zodiac: baris[2],
+    });
+  });
+
+createReadStream(resolve(__dirname, '../src/assets/data/ZodiacCalculation.csv'))
+  .pipe(parse({ delimiter: ',', from_line: 2 }))
+  .on('data', (baris) => {
+    db.horoscope.insert({
+      horoscope: baris[0],
+      tanggal_awal: baris[1],
+      tanggal_akhir: baris[2],
+    });
+  });

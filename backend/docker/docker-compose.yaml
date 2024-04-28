@@ -6,15 +6,11 @@ services:
     restart: always
     ports:
       - 27017:27017
-    volumes:
-      - datadb:/data/db
-      - ./../db/initdb.js:/docker-entrypoint-initdb.d/initdb.js:ro
     env_file:
       - ./../environment/local.env
-    environment:
-      # MONGODB_INITDB_DATABASE: ${MONGODB_DB}
-      MONGODB_INITDB_ROOT_USERNAME: ${MONGODB_USER}
-      MONGODB_INITDB_ROOT_PASSWORD: ${MONGODB_PASS}
+    volumes:
+      - ./../db/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh:ro
+      - datadb:/data/db
 
 volumes:
   datadb:

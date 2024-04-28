@@ -11,11 +11,11 @@ export type Payload = {
 };
 
 export const accessTokenConfig = (): JwtConfig => ({
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET ?? '',
   expiresIn: '1h',
 });
 
 export const refreshTokenConfig = (): JwtConfig => ({
-  secret: process.env.JWT_REFRESH_SECRET,
+  secret: process.env.JWT_REFRESH_SECRET ?? '',
   expiresIn: '60d',
 });

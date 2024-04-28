@@ -35,19 +35,11 @@ Zodiac/Horoscope Calculation: [Google Docs](https://docs.google.com/spreadsheets
 
 ## Technical Challenge - Backend: 🚀
 
-1. Create a project of _login/profile/chat_ using `Nest.Js`, `MongoDB` and `Node.js`
-   implemented using `docker` with JWT Token, DTO, validations, `socket.io`, `rabbit mq`
-   and unit tests.
-2. Visit our figma: [Figma Template](https://www.figma.com/file/VnqmoYfwdTzN8qvvDZn6GC/YouApp-Test?node-id=0%3A1&=p7hNpbhefNuFtLs7-0) and extract the fields needed to build the database
-   schema in `MongoDB` and API in `Nest.js` for the login/profile. For the chat room, do as
-   you prefer with as many features that shows off your knowledge of object oriented
-   programming and data structures. **Please do the chat with more effort as we will grade it more thoroughly**.
-3. Do CRUD with as many features that shows off your knowledge of object oriented
-   programming and data structures. Show off your knowledge of schema planning
-   and micro services in NOSQL. **You will build the above figma of login and profile** (Take note of the horoscope and zodiac in the profile) as well as text based chat between user A and user B with `RabbitMQ` & send a message to notify each user
-   whenever a message is received.
-4. Document and create API by adding the params below so that any frontend
-   developers may use it.
+1. Create a project of _login/profile/chat_ using `Nest.Js`, `MongoDB` and `Node.js` implemented using `docker` with JWT Token, DTO, validations, `socket.io`, `rabbit mq` and unit tests.
+2. Visit our figma: [Figma Template](https://www.figma.com/file/VnqmoYfwdTzN8qvvDZn6GC/YouApp-Test?node-id=0%3A1&=p7hNpbhefNuFtLs7-0) and extract the fields needed to build the database schema in `MongoDB` and API in `Nest.js` for the login/profile. For the chat room, do as you prefer with as many features that shows off your knowledge of object oriented programming and data structures. **Please do the chat with more effort as we will grade it more thoroughly**.
+3. Do CRUD with as many features that shows off your knowledge of object oriented programming and data structures. Show off your knowledge of schema planning and micro services in NOSQL. **You will build the above figma of login and profile** (Take note of the horoscope and zodiac in the profile) as well as text based chat between user A and user B with `RabbitMQ` & send a message to notify each user whenever a message is received.
+4. Document and create API by adding the params below so that any frontend developers may use it.
+   
    1. #### Register
       `POST` **url** : _/api/register_
       |Header|Request|Response|

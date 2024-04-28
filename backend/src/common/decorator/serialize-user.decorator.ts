@@ -7,7 +7,7 @@ export const SerializeUser = createParamDecorator(
     // console.log('request', request);
 
     if (data) {
-      return request.user[data];
+      return 'request.user[data]';
     }
     return request.user;
   },

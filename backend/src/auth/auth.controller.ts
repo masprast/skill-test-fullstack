@@ -1,40 +1,46 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { RegisterDto } from './dto/register.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  // Delete,
+} from '@nestjs/common';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { RefreshTokenDto } from './dto/token.dto';
-import { User } from 'src/users/entities/user.entity';
-import { SerializeUser } from 'src/common/decorator/serialize-user.decorator';
-import { AccessTokenGuard } from 'src/guards/accesstoken.guard';
-import { RefreshTokenGuard } from 'src/guards/refreshtoken.guard';
+import { CreateAuthDto } from './dto/create-auth.dto';
+import { UpdateAuthDto } from './dto/update-auth.dto';
 
+@ApiTags('Auth')
 @Controller()
 export class AuthController {
-  constructor(private authService: AuthService) {}
-
-  @Post('register')
-  async register(@Body() dto: RegisterDto) {
-    return await this.authService.register(dto);
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async login(@Body() dto: LoginDto) {
-    return await this.authService.login(dto);
+  @ApiResponse({ status: 200, description: 'user has been created' })
+  async create(@Body() createAuthDto: CreateAuthDto) {
+    await this.authService.create(createAuthDto);
+    return { message: 'User has been created' };
   }
 
-  @UseGuards(AccessTokenGuard)
-  @Get('getprofile')
-  getProfile(@Req() req: Request) {
-    const token = req.headers.get('Authorization').split(' ')[1];
-    return this.authService.getProfile(token);
+  // @Get()
+  // findAll() {
+  //   return this.authService.findAll();
+  // }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.authService.findOne(+id);
   }
 
-  @UseGuards(RefreshTokenGuard)
-  @Post('refreshtoken')
-  async refreshToken(
-    @SerializeUser() user: User,
-    @Body() dto: RefreshTokenDto,
-  ) {
-    return this.authService.refreshToken(user, dto);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
+    return this.authService.update(id, updateAuthDto);
   }
+
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.authService.remove(+id);
+  // }
 }

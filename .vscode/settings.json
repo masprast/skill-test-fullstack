@@ -1,3 +1,8 @@
 {
-    "vsicons.presets.nestjs": true
+	"vsicons.presets.nestjs": true,
+	"editor.defaultFormatter": null,
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"docker.languageserver.formatter.ignoreMultilineInstructions": true,
+	"html.format.indentHandlebars": true
 }

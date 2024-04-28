@@ -21,3 +21,4 @@ compose
 tut
 conto
 **/install.sh
+**/**/initdb.js
