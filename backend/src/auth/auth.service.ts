@@ -1,65 +1,81 @@
 import {
-  ConflictException,
+  ForbiddenException,
   Injectable,
-  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from '@src/user/entities/user.entity';
-import { Model } from 'mongoose';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { deHash, hash } from '@src/common/encryption/encryption';
 import { UserService } from '@src/user/user.service';
+import { User } from '@src/user/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { Payload } from '@src/utils/jwt.config';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<User>,
-  ) // private userService: UserService,
-  {}
+    private readonly userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
-  async create(createAuthDto: CreateAuthDto): Promise<CreateAuthDto> {
-    const adaUser = await this.userModel.findOne({
-      email: createAuthDto.email,
-    });
-    if (adaUser) {
-      throw new ConflictException('User sudah ada');
-    }
-    const userData: User = {
-      name: '',
-      birthday: '',
-      height: 0,
-      weight: 0,
-      horoscope: '',
-      zodiac: '',
-      interests: [],
-      ...createAuthDto,
+  async login(loginDto: LoginDto) {
+    const adaUser = await this.userService.findOne(
+      loginDto.username,
+      loginDto.email,
+    );
+    if (!adaUser) throw new ForbiddenException('There is no such User data');
+
+    const verifikasi = await this.validateUser(loginDto);
+    if (!verifikasi) throw new UnauthorizedException('Invalid credential');
+
+    const payload: Payload = {
+      sub: String(adaUser._id),
+      email: loginDto.email,
     };
-    await this.userModel.create(userData);
-    return createAuthDto;
+    const token = this.jwtService.sign(payload);
+    return {
+      message: 'User has been logged in successfully',
+      accessToken: token,
+    };
+    // return { pesan: 'login', data: loginDto };
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async register(registerDto: RegisterDto) {
+    const adaUser = await this.userService.cekEmailUsername(
+      registerDto.username,
+      registerDto.email,
+    );
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  async update(
-    id: string,
-    updateAuthDto: UpdateAuthDto,
-  ): Promise<UpdateAuthDto> {
-    const adaUser = await this.userModel.findById(id);
     if (!adaUser) {
-      throw new NotFoundException('User tidak ditemukan');
+      // throw new BadRequestException('User already exist');
+      return { message: 'User already exists' };
     }
-    const dataBaru = { ...adaUser.toObject(), ...updateAuthDto };
-    await this.userModel.findByIdAndUpdate(id, dataBaru);
-    return updateAuthDto;
+
+    const hashed = await hash(registerDto.password);
+    const dataUserBaru: RegisterDto = { ...registerDto, password: hashed };
+    const userBaru: User = { ...dataUserBaru };
+    await this.userService.create(userBaru);
+
+    return { message: 'User has been created successfully' };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async validateUser(loginDto: LoginDto) {
+    const adaUser = await this.userService.findOne(
+      loginDto.username,
+      loginDto.email,
+    );
+
+    if (!adaUser) return null;
+
+    console.log(loginDto.password, adaUser.password);
+    const verifikasi = await deHash(loginDto.password, adaUser.password);
+    if (!verifikasi) {
+      throw new UnauthorizedException('Unauthorized');
+    }
+
+    if (adaUser && verifikasi) return adaUser;
+
+    // return adaUser;
+    // return { pesan: 'verifikasi', data: loginDto };
   }
 }

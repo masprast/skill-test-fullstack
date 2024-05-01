@@ -1,12 +1,10 @@
-import { Types } from 'mongoose';
-
 export type JwtConfig = {
   secret: string;
   expiresIn: string;
 };
 
 export type Payload = {
-  sub: Types.ObjectId;
+  sub: string;
   email: string;
 };
 
@@ -15,7 +13,7 @@ export const accessTokenConfig = (): JwtConfig => ({
   expiresIn: '1h',
 });
 
-export const refreshTokenConfig = (): JwtConfig => ({
-  secret: process.env.JWT_REFRESH_SECRET ?? '',
-  expiresIn: '60d',
-});
+// export const refreshTokenConfig = (): JwtConfig => ({
+//   secret: process.env.JWT_REFRESH_SECRET ?? '',
+//   expiresIn: '7d',
+// });

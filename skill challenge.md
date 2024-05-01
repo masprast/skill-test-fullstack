@@ -55,7 +55,7 @@ Zodiac/Horoscope Calculation: [Google Docs](https://docs.google.com/spreadsheets
       `POST` **url** : _/api/login_
       |Header|Request|Response|
       |:-:|:-:|---|
-      |-|**RegisterDto{}**|`200` 👉 'User has been logged in'|
+      |-|**LoginDto{}**|`200` 👉 'User has been logged in'|
       response:
       ```json
       {
@@ -110,7 +110,7 @@ Zodiac/Horoscope Calculation: [Google Docs](https://docs.google.com/spreadsheets
       |`x-access-token` : _string_ / `Authorization`|**UpdateUserDto{}**|`200` 👉 'Profile has been updated'|
       ```json
       {
-        "message": "Profile has been found successfully",
+        "message": "Profile has been updated successfully",
         "data": {
           "email": "stringg@string.str",
           "username": "stringg",
@@ -154,7 +154,7 @@ Zodiac/Horoscope Calculation: [Google Docs](https://docs.google.com/spreadsheets
       |---|---|
       |**email\***| **string**|
       |**username\***| **string**|
-      |**password\***| **string** (>8 char)|
+      |**password\***| **string** (>8 *char*)|
 
    4. **LoginDto{}**
       |field|type|
@@ -199,3 +199,6 @@ Zodiac/Horoscope Calculation: [Google Docs](https://docs.google.com/spreadsheets
   |♒ Aquarius (Water Bearer)| January 20|February 18|
   |♓ Pisces (Fish)| February 19|March 20|
 - Zodiac
+  - Attached
+
+waktu video tutorial: 1:13

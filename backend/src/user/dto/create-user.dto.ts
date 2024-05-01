@@ -4,21 +4,21 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateUserDto {
   @ApiProperty({ type: 'string' })
   @IsString()
-  name: string;
+  name?: string;
 
   @ApiProperty({ type: 'string' })
   @IsString()
-  birthday: string;
+  birthday?: string;
 
   @ApiProperty({ type: 'number' })
   @IsNumber()
-  height: number;
+  height?: number;
 
   @ApiProperty({ type: 'number' })
   @IsNumber()
-  weight: number;
+  weight?: number;
 
   @ApiProperty({ type: 'array', items: { type: 'string' } })
   @IsArray()
-  interests: string[];
+  interests?: string[];
 }

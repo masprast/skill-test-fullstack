@@ -5,18 +5,20 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const options = new DocumentBuilder()
+  const config = new DocumentBuilder()
     .setTitle('Youapp Backend Techtest')
     .setDescription('Test skill for Backend with NestJS')
     .setVersion('1.0')
-    // .addServer('http://localhost/3000/', 'Local')
     .addTag('Backend Test')
+    .addServer('/api')
     .build();
 
-  const document = SwaggerModule.createDocument(app, options);
+  const document = SwaggerModule.createDocument(app, config);
   app.setGlobalPrefix('/api');
-  app.useGlobalPipes(new ValidationPipe());
-  SwaggerModule.setup('api-docs', app, document);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  SwaggerModule.setup('api-docs', app, document, {
+    customCss: '.scheme-container {display: none}',
+  });
   await app.listen(3000);
 }
 bootstrap();

@@ -2,21 +2,24 @@ import { createReadStream } from 'fs';
 import { parse } from 'csv';
 import { resolve } from 'path';
 
+// mongodb_1  | Could not run js script during database initialization.
+// mongodb_1  | Checkout the following file: /docker-entrypoint-initdb.d/initdb.js
+
 // use admin;
 db.getSiblingDB('admin');
 db.auth('$MONGODB_INITDB_ROOT_USERNAME', '$MONGODB_INITDB_ROOT_PASSWORD');
 // use backend;
-db.getSiblingDB('$MONGODB_INITDB_DATABASE');
 db.createUser({
   user: '$MONGODB_USER',
   pwd: '$MONGODB_PASS',
   roles: [
     { role: 'dbOwner', db: '$MONGODB_INITDB_DATABASE' },
-    'readWriteAnyDatabase',
+    'readWriteAnydatabase',
   ],
 });
 db.grantRolesToUser('$MONGODB_USER', [{ role: 'root', db: 'admin' }]);
 
+db.getSiblingDB('$MONGODB_INITDB_DATABASE');
 db.createCollection('horoscope');
 db.createCollection('zodiac');
 

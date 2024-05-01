@@ -3,51 +3,77 @@ import {
   Get,
   Post,
   Body,
-  Param,
-  Delete,
   Put,
+  Headers,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @ApiTags('Users')
 @Controller()
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
+  // @UseGuards(AuthGuard)
   @Post('createProfile')
   @ApiResponse({
     status: 201,
     description: 'The record has been successfully created.',
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @ApiBody({
-    type: CreateUserDto,
-    description: 'Json structure for user object',
-  })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @ApiHeader({ name: 'x-access-token', description: 'Access Token' })
+  async create(
+    @Headers('x-access-token') accessToken: string,
+    @Body() createUserDto: CreateUserDto,
+  ) {
+    const verifikasi = await this.jwtService.verifyAsync(accessToken, {
+      secret: process.env.JWT_SECRET,
+    });
+    if (!verifikasi) throw new UnauthorizedException('Token has been expired');
+
+    const decoded = this.jwtService.decode(accessToken);
+    // const user = await this.userService.findById(decoded.sub);
+    const user = await this.userService.update(decoded.sub, createUserDto);
+
+    return { message: 'Profile has been updated successfully', data: user };
+    // return this.userService.create(user);
   }
 
-  @Get('list')
-  findAll() {
-    return this.userService.findAll();
-  }
-
+  // @UseGuards(AuthGuard)
   @Get('getProfile')
-  findOne(@Param('id') id: string) {
-    return this.userService.findById(id);
+  @ApiHeader({
+    name: 'x-access-token',
+    description: 'Access Token',
+  })
+  async findOne(@Headers('x-access-token') accessToken: string) {
+    const decoded = this.jwtService.decode(accessToken);
+    const user = await this.userService.findById(decoded.sub);
+    delete user.password;
+    return {
+      message: 'Profile has been found successfully',
+      data: user,
+    };
   }
 
   @Put('updateProfile')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  @ApiHeader({ name: 'x-access-token', description: 'Access Token' })
+  async update(
+    @Headers('x-access-token') accessToken: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    const decoded = this.jwtService.decode(accessToken);
+    return this.userService.update(decoded.sub, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.userService.remove(id);
+  // }
 }
