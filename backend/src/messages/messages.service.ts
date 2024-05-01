@@ -1,26 +1,64 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import { Injectable, Logger } from '@nestjs/common';
+import { MessageDto } from './dto/message.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import {
+  Channel,
+  ChannelDocument,
+  Message,
+  MessageDocument,
+} from './entities/message.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class MessagesService {
-  create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
+  constructor(
+    @InjectModel(Message.name)
+    private readonly messageModel: Model<MessageDocument>,
+    @InjectModel(Channel.name)
+    private readonly channelModel: Model<ChannelDocument>,
+  ) {}
+  private logger = new Logger(MessagesService.name);
+
+  async create(createMessageDto: MessageDto) {
+    return new this.messageModel(createMessageDto);
   }
 
-  findAll() {
-    return `This action returns all messages`;
+  async findAllMessage(channel: string) {
+    return await this.messageModel.find({ channel: channel });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
+  async findMessageInChanel(text: string, channel: string) {
+    return await this.messageModel.aggregate([
+      { $project: { __v: 0 } },
+      {
+        $match: {
+          $and: [
+            { channel: channel },
+            { message: { $text: { $search: text, $caseSensitive: false } } },
+          ],
+        },
+      },
+    ]);
   }
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
+  async listChannel(iduser: string) {
+    this.logger.log(iduser);
+    return await this.channelModel.aggregate([]);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} message`;
+  async updateChanel(id: string, namaChanel: string) {
+    return await this.channelModel.findByIdAndUpdate(
+      id,
+      { name: namaChanel },
+      { new: true },
+    );
+  }
+
+  async removeMessage(id: string) {
+    return await this.messageModel.findByIdAndDelete(id);
+  }
+
+  async removeChannel(id: string) {
+    return await this.channelModel.findByIdAndDelete(id);
   }
 }
