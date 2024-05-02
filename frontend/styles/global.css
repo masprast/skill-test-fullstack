@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg {
+    background-image: linear-gradient(30deg, #0a171d 20%, #11282e 70%, #1d3e43 90%);
+}
+
+.spasi{
+    padding-bottom: 78;
+}

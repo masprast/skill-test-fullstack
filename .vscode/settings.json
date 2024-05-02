@@ -4,5 +4,8 @@
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": true,
 	"docker.languageserver.formatter.ignoreMultilineInstructions": true,
-	"html.format.indentHandlebars": true
+	"html.format.indentHandlebars": true,
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }
