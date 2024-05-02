@@ -1,5 +1,6 @@
 import React from "react";
 import { Judul } from "../auth/JudulAuth";
+import { ChatPersonButton } from "./ChatPersonButton";
 
 export const ChatLayout = (): React.ReactElement => {
 	const uwong = ["parni", "yati", "tejo", "paino", "tarmin", "kamidi"];
@@ -8,18 +9,24 @@ export const ChatLayout = (): React.ReactElement => {
 		const element = [];
 		uwong.forEach((w) =>
 			element.push(
-				<div>
-					<div className="text-justify text-lg font-medium text-white">{w}</div>
-					<div className="fles flex-row text-start text-nowrap gap-32">
-						<div className="flex-nowrap text-start text-ellipsis">
-							ini teks yang
-							panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaangggggggggggggggggg
-							sekaliiiiiiii......
-						</div>
-					</div>
-				</div>
+				// <div>
+				// 	<div className="text-justify text-lg font-medium text-white">{w}</div>
+				// 	<div className="fles flex-row text-start text-nowrap gap-32">
+				// 		<div className="flex-nowrap text-start text-ellipsis">
+				// 			ini teks yang
+				// 			panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaangggggggggggggggggg
+				// 			sekaliiiiiiii......
+				// 		</div>
+				// 	</div>
+				// </div>
+				<ChatPersonButton
+					person={w}
+					pesan="ini teks yang panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaangggggggggggggggggg sekaliiiiiiii......"
+					waktu={new Date(Date.now()).toISOString().split("T")[0]}
+				/>
 			)
 		);
+		console.log(uwong.length);
 
 		return element;
 	};
@@ -36,7 +43,7 @@ export const ChatLayout = (): React.ReactElement => {
 					:0.:
 				</div>
 			</div>
-			<div className="flex flex-col self-center gap-10 border border-separate border-spacing-2 bg-slate-800 px-4 py-4 h-screen">
+			<div className="flex flex-col self-center gap-10 border border-separate border-spacing-2 bg-green-200 px-4 py-4">
 				{uwong.length < 1 ? infoPersonListEmpty() : genUwong()}
 			</div>
 		</div>

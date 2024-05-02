@@ -95,9 +95,6 @@ Untuk melakukan pengetesan:
         "data": {
           "email": "stringg@string.str",
           "username": "stringg",
-          "name": "stringg",
-          "birthday": "tanggal",
-          "horoscope": "Error",
           "height": 120,
           "weight": 120,
           "interests": [
