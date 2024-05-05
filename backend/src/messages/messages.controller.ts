@@ -34,14 +34,14 @@ export class MessagesController {
   @ApiBearerAuth('x-access-token')
   // @ApiHeader({ name: 'x-access-token', description: 'Access Token' })
   async listChannel(@SerializeUser() userid: object) {
-    return this.messageService.listChannel(userid['sub']);
+    return await this.messageService.listChannel(userid['sub']);
   }
 
   @UseGuards(JWTAuthGuard)
   @Get('/:channel')
   @ApiBearerAuth('x-access-token')
   async getChannel(@Param() channel: string) {
-    return this.messageService.getChannel(channel);
+    return await this.messageService.getChannel(channel);
   }
 
   @UseGuards(JWTAuthGuard)

@@ -60,7 +60,7 @@ export class MessagesService {
       );
       await tambahUser.save();
     }
-    this.logger.log(`user: ${cariUserDiChannel.id}`);
+    // this.logger.log(`user: ${cariUserDiChannel.id}`);
 
     const updatedChannel = await this.channelModel.findOneAndUpdate(
       { _id: adaChannel.id, users: { $in: user._id } },
@@ -108,6 +108,9 @@ export class MessagesService {
       // },
       { $project: { _id: 0, __v: 0 } },
     ]);
+    // const adaChannel = await this.channelModel
+    //   .findOne({ name: channel }, { _id: 0, __v: 0 })
+    //   .exec();
     this.logger.log(adaChannel);
     return adaChannel;
   }

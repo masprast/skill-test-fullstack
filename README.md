@@ -48,18 +48,29 @@ Untuk melakukan pengetesan:
       `POST` **url** : _/api/createProfile_
       |                    Header                     |       Request       | Response                           |
       | :-------------------------------------------: | :-----------------: | ---------------------------------- |
-      | `x-access-token` : _string_ / `Authorization` | **CreateUserDto{}** | `201` 👉 'Profile has been created' |
+      | `x-access-token` : _string_ & `Authorization` | **CreateUserDto{}** | `201` 👉 'Profile has been created' |
       response:
       ```json
       {
-        "message": "Profile has been created successfully",
+        "message": "Profile has been updated successfully",
         "data": {
-          "email": "stringg@string.str",
-          "username": "stringg",
-          "interests": []
+          "email": "pras0@mail.pras",
+          "username": "prast_number.0",
+          "interests": [
+            "computer",
+            "games",
+            "architecture"
+          ],
+          "birthday": "2 Desember 1989",
+          "height": 160,
+          "horoscope": "Sagittarius (Archer)",
+          "name": "prast number.0",
+          "weight": 58,
+          "zodiac": "Snake"
         }
       }
       ```
+      - Note: Masukkan token pada *header* `x-access-token` dan *Auth Bearer*, jika token hanya diisi pada salah satu, akan menyebabkan *error* **500** (*x-access-token* kosong) atau **401** (*auth bearer* kosong)
    4. #### Get Profile
       `GET` **url** : _/api/getProfile_
       |                    Header                     | Request | Response                         |
@@ -70,17 +81,19 @@ Untuk melakukan pengetesan:
       {
         "message": "Profile has been found successfully",
         "data": {
-          "email": "stringg@string.str",
-          "username": "stringg",
-          "name": "stringg",
-          "birthday": "28 Februari 2001",
-          "horoscope": "Pisces",
-          "zodiac": "Snake",
-          "height": 150,
-          "weight": 150,
+          "email": "pras0@mail.pras",
+          "username": "prast_number.0",
           "interests": [
-            "string"
-          ]
+            "computer",
+            "games",
+            "architecture"
+          ],
+          "birthday": "2 Desember 1989",
+          "height": 160,
+          "horoscope": "Sagittarius (Archer)",
+          "name": "prast number.0",
+          "weight": 58,
+          "zodiac": "Snake"
         }
       }
       ```
@@ -89,24 +102,63 @@ Untuk melakukan pengetesan:
       |                    Header                     |       Request       | Response                           |
       | :-------------------------------------------: | :-----------------: | ---------------------------------- |
       | `x-access-token` : _string_ / `Authorization` | **UpdateUserDto{}** | `200` 👉 'Profile has been updated' |
+      Requests body:
       ```json
       {
-        "message": "Profile has been updated successfully",
-        "data": {
-          "email": "stringg@string.str",
-          "username": "stringg",
-          "height": 120,
-          "weight": 120,
-          "interests": [
-            "string"
-          ]
-        }
+        "interests": [
+          "game",
+          "architecture",
+          "cars",
+          "education"
+        ]
+      }
+      ```
+      Response body:
+      ```json
+      {
+        "email": "pras0@mail.pras",
+        "username": "prast_number.0",
+        "interests": [
+          "game",
+          "architecture",
+          "cars",
+          "education"
+        ],
+        "birthday": "2 Desember 1989",
+        "height": 160,
+        "horoscope": "Sagittarius (Archer)",
+        "name": "prast number.0",
+        "weight": 58,
+        "zodiac": "Snake"
       }
       ```
    6. #### View Messages
       **url** : _/api/viewMessages_
    7. #### Send Message
-      **url** : _/api/sendMessage_
+      `POST` **url** : ~~_/api/sendMessage_~~ */api/messages/create*
+      |Header|Request|Response|
+      |-|-|-|
+      |Authorization: 'Bearer'|**object**|**object**|
+      Request body:
+      ```json
+      {
+        "user": "prast_number.0",
+        "channel": "channel1",
+        "message": "testing",
+        "created": "2024-05-04T08:08:00.000Z"
+      }
+      ```
+      Response body
+      ```json
+      {
+        "user": "6637a28285d953b6762bde0d",
+        "channel": "6637a74085d953b6762bf087",
+        "message": "testing",
+        "created": "2024-05-05T15:38:54.048Z",
+        "_id": "6637a80ecf21c3df22fda40d",
+        "__v": 0
+      }
+      ```
 
 ### TODO:
 - [x] Konfigurasi Docker utk MongoDB & RabbitMQ
