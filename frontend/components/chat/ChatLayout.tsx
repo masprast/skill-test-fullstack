@@ -1,51 +1,187 @@
-import React from "react";
+import React, { useState } from "react";
 import { Judul } from "../auth/JudulAuth";
 import { ChatPersonButton } from "./ChatPersonButton";
+import ChannelHeader from "./PageHeader";
+import SendText from "./SendText";
+import ChannelList from "./ChannelList";
+import ChatBubble from "./ChatBubble";
 
-export const ChatLayout = (): React.ReactElement => {
-	const uwong = ["parni", "yati", "tejo", "paino", "tarmin", "kamidi"];
+const sample = [
+	{
+		nama: "Ryann Remo",
+		lastMessage: "Yea, Sure!",
+		lastMessageCreation: "15 April",
+	},
+	{
+		nama: "Karp Bonolo",
+		lastMessage: "Yea, Sure!",
+		lastMessageCreation: "15 April",
+	},
+	{
+		nama: "Mercedes Yemelyan",
+		lastMessage: "Yea, Sure!",
+		lastMessageCreation: "15 April",
+	},
+	{
+		nama: "Cadi Kajetán",
+		lastMessage: "Yea, Sure!",
+		lastMessageCreation: "15 April",
+	},
+	{
+		nama: "Rina Samuel",
+		lastMessage: "Yea, Sure!",
+		lastMessageCreation: "15 April",
+	},
+	{
+		nama: "Johny Sins",
+		lastMessage: "Yea, Sure!",
+		lastMessageCreation: "15 April",
+	},
+];
 
-	const genUwong = () => {
-		const element = [];
-		uwong.forEach((w) =>
-			element.push(
-				// <div>
-				// 	<div className="text-justify text-lg font-medium text-white">{w}</div>
-				// 	<div className="fles flex-row text-start text-nowrap gap-32">
-				// 		<div className="flex-nowrap text-start text-ellipsis">
-				// 			ini teks yang
-				// 			panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaangggggggggggggggggg
-				// 			sekaliiiiiiii......
-				// 		</div>
-				// 	</div>
-				// </div>
-				<ChatPersonButton
-					person={w}
-					pesan="ini teks yang panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaangggggggggggggggggg sekaliiiiiiii......"
-					waktu={new Date(Date.now()).toISOString().split("T")[0]}
-				/>
-			)
-		);
-		console.log(uwong.length);
+type Props = {
+	channel: string;
+	messages: { owner: boolean; message: string; created: string }[];
+};
 
-		return element;
+const ChatLayout = ({ channel, messages }: Props): React.ReactElement => {
+	// const [channelMessages, setChannelMessages] = useState([]);
+	const [selected, setSelected] = useState(false);
+	const selecting = () => {
+		setSelected(!selected);
+	};
+	const fillChannelWithMessage = () => {
+		const listMessages = [];
+		if (messages.length < 1) {
+			listMessages.push(
+				<div className="w-full h-full content-center text-center">
+					<span>Start chatting</span>
+				</div>
+			);
+		} else {
+			messages.forEach((m) => {
+				listMessages.push(
+					<ChatBubble owner={m.owner} created={m.created} message={m.message} />
+				);
+			});
+		}
+		return listMessages;
 	};
 
-	const infoPersonListEmpty = () => <div>Find people to chat</div>;
-
 	return (
-		<div className="flex content-center flex-col gap-5 justify-center w-full h-screen max-md:pr-5">
-			<div className="flex flex-row self-center gap-36 mb-16 mt-16">
-				<div className="ml-6 text-2xl font-bold text-white max-md:mt-10 max-md:ml-2.5">
-					Chat
+		<div className="min-h-screen flex w-full">
+			<div className="hidden xl:block sm:flex-2 w-72 bg-gray-200 px-2">
+				<div className="user-profile text-center">
+					<div className="w-32 h-32 rounded-full m-auto mt-16 border-2 border-white bg-white shadow-lg">
+						<div className="block bg-blue-700"></div>
+					</div>
+					<div className="text-gray-800 mt-8">
+						Henry Prasetya Kurniawan
+						<span className="inline-block align-text-bottom">
+							<svg
+								fill="none"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								className="w-4 h-4">
+								<path d="M19 9l-7 7-7-7"></path>
+							</svg>
+						</span>
+					</div>
 				</div>
-				<div className="ml-6 text-2xl font-bold text-white max-md:mt-10 max-md:ml-2.5">
-					:0.:
-				</div>
+				<ChannelList channel={sample} />
 			</div>
-			<div className="flex flex-col self-center gap-10 border border-separate border-spacing-2 bg-green-200 px-4 py-4">
-				{uwong.length < 1 ? infoPersonListEmpty() : genUwong()}
+			<div className="flex-1 bg-green-200 w-full">
+				<div className="main-body container m-auto w-11/12 flex flex-col">
+					<div className="absolute py-4 flex-2 flex flex-row">
+						<div className="flex-1">
+							<span className="xl:hidden inline-block text-gray-700 hover:text-gray-900 align-bottom">
+								<span className="block h-6 w-6 p-1 rounded-full hover:bg-gray-400">
+									<svg
+										className="w-4 h-4"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										stroke="currentColor"
+										viewBox="0 0 24 24">
+										<path d="M4 6h16M4 12h16M4 18h16"></path>
+									</svg>
+								</span>
+							</span>
+							<span className="lg:hidden inline-block ml-8 text-gray-700 hover:text-gray-900 align-bottom">
+								<span className="block h-6 w-6 p-1 rounded-full hover:bg-gray-400">
+									<svg
+										className="h-4 w-4"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										stroke="currentColor"
+										viewBox="0 0 24 24">
+										<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+									</svg>
+								</span>
+							</span>
+						</div>
+						{/* <div className="flex-1 text-right">
+								<span className="inline-block text-gray-700">
+									Status:{" "}
+									<span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white"></span>{" "}
+									<b>Online</b>
+									<span className="inline-block align-text-bottom">
+										<svg
+											fill="none"
+											stroke="currentColor"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											viewBox="0 0 24 24"
+											className="w-4 h-4">
+											<path d="M19 9l-7 7-7-7"></path>
+										</svg>
+									</span>
+								</span>
+
+								<span className="inline-block ml-8 text-gray-700 hover:text-gray-900 align-bottom">
+									<span className="block h-6 w-6 p-1 rounded-full hover:bg-gray-400">
+										<svg
+											fill="none"
+											stroke="currentColor"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											viewBox="0 0 24 24"
+											className="w-4 h-4">
+											<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+										</svg>
+									</span>
+								</span>
+							</div> */}
+					</div>
+
+					<div className="main flex-1 flex flex-col">
+						<div className="hidden lg:block heading flex-2">
+							<h1 className="text-3xl text-gray-700 mb-4">Chat</h1>
+						</div>
+						<div className="chat-area flex flex-col max-h-screen">
+							<ChannelHeader channel={channel} />
+							<div className="messages overflow-auto flex-grow">
+								{fillChannelWithMessage()}
+							</div>
+							<SendText
+								func={() => {
+									true;
+								}}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
 };
+
+export default ChatLayout;

@@ -1,31 +1,31 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes, Types } from 'mongoose';
 
-@Schema({ timestamps: false })
+@Schema()
 class Message {
-  @Prop()
-  user: string;
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'users' })
+  user: Types.ObjectId;
+
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'channel' })
+  channel: Types.ObjectId;
 
   @Prop()
-  channel: string;
-
-  @Prop()
-  messages: string;
+  message: string;
 
   @Prop()
   created: Date;
 }
 
-@Schema({ timestamps: true })
+@Schema()
 class Channel {
   @Prop()
   name: string;
 
-  @Prop()
-  users: string[];
+  @Prop({ type: [SchemaTypes.ObjectId], ref: 'users', default: [] })
+  users?: Types.ObjectId[];
 
-  @Prop()
-  messages: string[];
+  @Prop({ type: [SchemaTypes.ObjectId], ref: 'message', default: [] })
+  messages?: string[];
 }
 
 type MessageDocument = HydratedDocument<Message>;

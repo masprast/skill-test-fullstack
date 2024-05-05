@@ -109,14 +109,15 @@ Untuk melakukan pengetesan:
       **url** : _/api/sendMessage_
 
 ### TODO:
-1. ~~Konfigurasi Docker utk MongoDB & RabbitMQ~~
-2. ~~CRUD user~~
-3. ~~Auth dengan JWT token~~
-4. ~~Validasi input/payload~~
-5. ~~SwaggerUI~~
-6. Chat menggunakan websocket
-7. Chat queue pd RabbitMQ
-8. unit test
+- [x] Konfigurasi Docker utk MongoDB & RabbitMQ
+- [x] CRUD user
+- [x] Auth dengan JWT token
+- [x] Validasi input/payload
+- [x] SwaggerUI
+- [x] Chat REST API
+- Chat menggunakan websocket
+- Chat queue pd RabbitMQ
+- unit test
 
 ## FRONTEND
 *Techstack* yang digunakan untuk *backend* antara lain:
@@ -130,9 +131,8 @@ $ npm run dev
 Lalu buka alamat `localhost:8000` pada web browser
 
 ### TODO
-1. ~~Load TailwindCSS ke NextJS~~
-2. ~~Halaman Auth (Login & Register)~~
-3. ~~Halaman user~~
-4. Halaman Chat (WIP)
-5. API connection
-6. 
+- [x] Load TailwindCSS ke NextJS
+- [x] Halaman Auth (Login & Register)
+- [x] Halaman user
+- Halaman Chat (WIP)
+- API connection

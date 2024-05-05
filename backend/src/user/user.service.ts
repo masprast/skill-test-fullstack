@@ -68,6 +68,13 @@ export class UserService {
     return adaUser;
   }
 
+  async findOneByUsername(username: string) {
+    return await this.userModel.findOne(
+      { username: username },
+      { __v: 0, password: 0 },
+    );
+  }
+
   async findById(id: string) {
     const adaUser = await this.userModel
       .findById(id, { _id: 0, password: 0, __v: 0 })

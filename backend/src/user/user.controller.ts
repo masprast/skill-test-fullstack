@@ -6,12 +6,14 @@ import {
   Put,
   Headers,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { JWTAuthGuard } from '@src/guards/auth.guards';
 
 @ApiTags('Users')
 @Controller()
@@ -21,7 +23,7 @@ export class UserController {
     private jwtService: JwtService,
   ) {}
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(JWTAuthGuard)
   @Post('createProfile')
   @ApiResponse({
     status: 201,
@@ -46,7 +48,7 @@ export class UserController {
     // return this.userService.create(user);
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(JWTAuthGuard)
   @Get('getProfile')
   @ApiHeader({
     name: 'x-access-token',
@@ -62,6 +64,7 @@ export class UserController {
     };
   }
 
+  @UseGuards(JWTAuthGuard)
   @Put('updateProfile')
   @ApiHeader({ name: 'x-access-token', description: 'Access Token' })
   async update(

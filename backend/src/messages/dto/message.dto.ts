@@ -11,6 +11,6 @@ export class MessageDto {
   @MaxLength(200, { message: 'max: 200 character' })
   message: string;
 
-  @IsDate()
+  @IsString()
   created: Date;
 }

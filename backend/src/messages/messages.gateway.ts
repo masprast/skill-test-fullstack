@@ -6,6 +6,7 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   WebSocketServer,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import { Logger } from '@nestjs/common';
 import { MessagesService } from './messages.service';
@@ -41,10 +42,16 @@ export class MessagesGateway
   }
 
   @SubscribeMessage('messasge')
-  handleMessages(client: any, @MessageBody() message: string) {
-    this.logger.log(`message received from ${client.id}`);
-    this.logger.debug(`payload: ${message}`);
-    this.server.emit('message', message);
+  async handleMessages(
+    @ConnectedSocket() client: any,
+    @MessageBody() payload: MessageDto,
+  ) {
+    this.logger.debug(`payload: ${payload}`);
+    await this.messagesService.create(payload);
+    this.server.emit('message', {
+      from: payload.user,
+      pesan: payload.message,
+    });
   }
 
   // @SubscribeMessage('message')
