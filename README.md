@@ -134,5 +134,5 @@ Lalu buka alamat `localhost:8000` pada web browser
 - [x] Load TailwindCSS ke NextJS
 - [x] Halaman Auth (Login & Register)
 - [x] Halaman user
-- Halaman Chat (WIP)
+- [x] Halaman Chat
 - API connection
