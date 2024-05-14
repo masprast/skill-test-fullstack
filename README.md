@@ -188,3 +188,13 @@ Lalu buka alamat `localhost:8000` pada web browser
 - [x] Halaman user
 - [x] Halaman Chat
 - API connection
+
+## FRONTEND ( FLUTTER )
+### TODO
+- [x] working about page
+- [ ] login page
+- [ ] register page
+- [ ] home page
+- [ ] chat page
+- [ ] API integration
+- [ ] save API data to local
