@@ -200,5 +200,3 @@ Zodiac/Horoscope Calculation: [Google Docs](https://docs.google.com/spreadsheets
   |♓ Pisces (Fish)| February 19|March 20|
 - Zodiac
   - Attached
-
-waktu video tutorial: 1:13
