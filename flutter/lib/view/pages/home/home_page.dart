@@ -9,20 +9,38 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasePage(
-      child: Center(
-        child: ElevatedButton(
-            style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.white)),
-            // onPressed: () => navigatorKey.currentState
-            //     ?.pushNamed(AppRoute.about.name, arguments: userincomplete),
-            onPressed: () =>
-                navigatorKey.currentState?.pushNamed(AppRoute.login.name),
-            child: const Text(
-              'login page',
-              style: TextStyle(color: Colors.black),
-            )),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text(
+            'Chat',
+            style: TextStyle(
+                color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            Hero(
+                tag: 'UserProfile',
+                child: IconButton.filled(
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () => print('object'),
+                    icon: const Icon(
+                      Icons.person_outline,
+                      color: Colors.white,
+                      size: 14,
+                    )))
+          ],
+        ),
+        child: ListView.builder(
+          itemCount: 10,
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: Icon(Icons.person),
+              title: Text('person #$index'),
+              subtitle: Text('data'),
+            );
+          },
+        ));
   }
 }
 

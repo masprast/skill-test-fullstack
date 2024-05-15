@@ -192,8 +192,8 @@ Lalu buka alamat `localhost:8000` pada web browser
 ## FRONTEND ( FLUTTER )
 ### TODO
 - [x] working about page
-- [ ] login page
-- [ ] register page
+- [x] working login page
+- [x] working register page
 - [ ] home page
 - [ ] chat page
 - [ ] API integration
