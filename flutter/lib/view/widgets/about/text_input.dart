@@ -14,6 +14,7 @@ class AboutDataInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       textAlign: TextAlign.end,
+      textAlignVertical: TextAlignVertical.center,
       textCapitalization: TextCapitalization.words,
       style: TextStyle(color: aktif ? Colors.white : AppColor.aboutTextOp),
       maxLength: 64,

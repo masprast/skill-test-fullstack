@@ -11,9 +11,16 @@ class HomePage extends StatelessWidget {
     return BasePage(
       child: Center(
         child: ElevatedButton(
-            onPressed: () => navigatorKey.currentState
-                ?.pushNamed(AppRoute.about.name, arguments: userincomplete),
-            child: Text('about page')),
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.white)),
+            // onPressed: () => navigatorKey.currentState
+            //     ?.pushNamed(AppRoute.about.name, arguments: userincomplete),
+            onPressed: () =>
+                navigatorKey.currentState?.pushNamed(AppRoute.login.name),
+            child: const Text(
+              'login page',
+              style: TextStyle(color: Colors.black),
+            )),
       ),
     );
   }

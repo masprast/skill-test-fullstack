@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_youapp/view/pages/about/about_page.dart';
 import 'package:frontend_youapp/view/pages/interest/add_interests.dart';
 import 'package:frontend_youapp/view/pages/home/home_page.dart';
+import 'package:frontend_youapp/view/pages/login/login_page.dart';
+import 'package:frontend_youapp/view/pages/register/register_page.dart';
 
 class RouteService {
   static Route routeService(RouteSettings settings) {
@@ -10,7 +12,7 @@ class RouteService {
 
     switch (settings.name) {
       case 'home':
-        widget = HomePage();
+        widget = const HomePage();
         break;
       case 'about':
         widget = AboutPage(
@@ -18,10 +20,10 @@ class RouteService {
         );
         break;
       case 'login':
-        widget = Container();
+        widget = const LoginPage();
         break;
       case 'register':
-        widget = Container();
+        widget = const RegisterPage();
         break;
       case 'interest':
         widget = AddInterestPage(
