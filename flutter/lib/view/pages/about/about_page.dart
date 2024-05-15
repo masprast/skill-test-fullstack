@@ -1,19 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:frontend_youapp/app/configs/constants/app_color.dart';
 import 'package:frontend_youapp/app/configs/constants/global_key.dart';
 import 'package:frontend_youapp/app/configs/enum/app_route.dart';
 import 'package:frontend_youapp/view/pages/base_page.dart';
 import 'package:frontend_youapp/view/widgets/about/about_box_edit.dart';
 import 'package:frontend_youapp/view/widgets/about/about_box_empty.dart';
-import 'package:frontend_youapp/view/widgets/about/about_kontainer.dart';
 import 'package:frontend_youapp/view/widgets/about/about_with_data.dart';
 import 'package:frontend_youapp/view/widgets/about/animated_about_container.dart';
 import 'package:frontend_youapp/view/widgets/about/image_profile.dart';
 import 'package:frontend_youapp/view/widgets/about/interest_wrapper.dart';
-import 'package:frontend_youapp/view/widgets/about/row_data.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key, required this.user});
@@ -121,14 +120,17 @@ class _AboutPageState extends State<AboutPage> {
         child: Column(
           children: [
             const SizedBox(height: 12),
-            ProfilePicture(
-                image: image?.path,
-                fullname: user['name'],
-                age: usia(user['birthday']) ?? '',
-                gender: user['kelamin'],
-                horoscope: user['horoscope'],
-                zodiac: user['zodiac'],
-                onPresed: () => changeData()),
+            Hero(
+              tag: 'UserProfile',
+              child: ProfilePicture(
+                  image: image?.path,
+                  fullname: user['name'],
+                  age: usia(user['birthday']) ?? '',
+                  gender: user['kelamin'],
+                  horoscope: user['horoscope'],
+                  zodiac: user['zodiac'],
+                  onPresed: () => changeData()),
+            ),
             const SizedBox(height: 24),
             AboutAnimatedContainer(
                 showEdit: showEditAbout,
