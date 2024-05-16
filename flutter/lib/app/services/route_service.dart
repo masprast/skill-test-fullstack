@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_youapp/view/pages/about/about_page.dart';
+import 'package:frontend_youapp/view/pages/chat/chat_page.dart';
 import 'package:frontend_youapp/view/pages/interest/add_interests.dart';
 import 'package:frontend_youapp/view/pages/home/home_page.dart';
 import 'package:frontend_youapp/view/pages/login/login_page.dart';
@@ -31,7 +32,9 @@ class RouteService {
         );
         break;
       case 'chat':
-        widget = Container();
+        widget = ChatPage(
+          data: arg as Map<String, dynamic>,
+        );
         break;
       default:
     }

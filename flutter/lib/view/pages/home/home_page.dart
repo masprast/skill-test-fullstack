@@ -1,7 +1,4 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:frontend_youapp/app/configs/constants/app_color.dart';
 import 'package:frontend_youapp/app/configs/constants/global_key.dart';
 import 'package:frontend_youapp/app/configs/enum/app_route.dart';
@@ -19,16 +16,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final ScrollController scrollController;
   final TextEditingController textEditingController = TextEditingController();
-  late List<String> list;
-  List<String> filtered = [];
+  late List<Map<String, dynamic>> list;
+  List<Map<String, dynamic>> filtered = [];
 
   pencarian(String cari) {
     if (cari.isNotEmpty) {
       setState(() {
         textEditingController.clear();
         filtered = list
-            .where(
-                (element) => element.toLowerCase().contains(cari.toLowerCase()))
+            .where((element) =>
+                element.values.any((element) => element == cari.toLowerCase()))
             .toList();
       });
     }
@@ -40,9 +37,10 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     scrollController = ScrollController();
-    list = [
-      for (var i = 0; i < 20; i++) ...['channel #$i']
-    ];
+    // list = [
+    //   for (var i = 0; i < 20; i++) ...['channel #$i']
+    // ];
+    list = userchannel;
     filtered = list;
   }
 
@@ -115,9 +113,8 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 12),
                   child: GestureDetector(
-                      onTap: () => navigatorKey.currentState?.pushNamed(
-                          AppRoute.about.name,
-                          arguments: userincomplete),
+                      onTap: () => navigatorKey.currentState
+                          ?.pushNamed(AppRoute.about.name, arguments: user),
                       child: const AvatarUser(nama: 'nama')),
                 ),
               ),
@@ -194,9 +191,12 @@ class _HomePageState extends State<HomePage> {
                 itemCount: filtered.length,
                 itemBuilder: (context, index) {
                   return ChannelsInHome(
-                      onTap: () => print(filtered[index]),
-                      channelName: filtered[index],
-                      message: 'message from ${filtered[index]}');
+                      onTap: () => navigatorKey.currentState?.pushNamed(
+                          AppRoute.chat.name,
+                          arguments: filtered[index]),
+                      channelName: filtered[index]['channelname'],
+                      message:
+                          'message from ${filtered[index]['channelname']}');
                 },
               ))
         ],
@@ -209,16 +209,47 @@ final userincomplete = {
   "name": "@johndoe123",
   "username": '@johndoe',
 };
-final user = {
+final Map<String, dynamic> user = {
   "name": "@johndoe123",
   "username": '@johndoe',
   'birthday': '23-4-2000',
-  'horoscope': '',
-  'zodiac': '',
-  'age': '',
-  'interests': [],
-  'height': 0,
-  'weight': 0,
-  'email': '',
+  'horoscope': 'gemini',
+  'zodiac': 'monkey',
+  'age': '56',
+  'interests': ['hiking', 'diving', 'fishing'],
+  'height': 190,
+  'weight': 90,
+  'email': 'johndoe@mail.doe',
   'photo': ''
 };
+final List<Map<String, dynamic>> userchannel = [
+  for (var i = 0; i < 20; i++) ...[
+    {
+      'channelname': 'channel #$i',
+      'last_message': 'message from #$i',
+      'user': ['@johndoe', '@renedoe'],
+      'me': '@johndoe',
+      'messages': [
+        {'author': '@renedoe', 'message': 'hai,', 'date': '2024-05-16'},
+        {'author': '@johndoe', 'message': 'hai,', 'date': '2024-05-16'},
+        {
+          'author': '@renedoe',
+          'message': 'what do you do?',
+          'date': '2024-05-16'
+        },
+        {
+          'author': '@johndoe',
+          'message': 'nothing important',
+          'date': '2024-05-16'
+        },
+        {'author': '@renedoe', 'message': 'wanna join?', 'date': '2024-05-16'},
+        {'author': '@johndoe', 'message': 'okay', 'date': '2024-05-16'},
+        {
+          'author': '@renedoe',
+          'message': 'okay, see you',
+          'date': '2024-05-16'
+        },
+      ]
+    }
+  ]
+];

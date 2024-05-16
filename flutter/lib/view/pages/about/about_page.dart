@@ -69,25 +69,26 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     // TODO: implement initState
-    user = {
-      'email': 'email',
-      'username': 'username',
-      'password': 'password',
-      'name': 'name',
-      'birthday': '1998-05-23',
-      'kelamin': 'Female',
-      'horoscope': 'virgo',
-      'zodiac': 'ox',
-      'height': 'height',
-      'weight': 'weight',
-      'interests': [
-        'asdasd',
-        'sacafa',
-        'sdgdrhyfysdcaecaef',
-        'ascvcafqwdq',
-        'ds'
-      ]
-    };
+    // user = {
+    //   'email': 'email',
+    //   'username': 'username',
+    //   'password': 'password',
+    //   'name': 'name',
+    //   'birthday': '1998-05-23',
+    //   'kelamin': 'Female',
+    //   'horoscope': 'virgo',
+    //   'zodiac': 'ox',
+    //   'height': 'height',
+    //   'weight': 'weight',
+    //   'interests': [
+    //     'asdasd',
+    //     'sacafa',
+    //     'sdgdrhyfysdcaecaef',
+    //     'ascvcafqwdq',
+    //     'ds'
+    //   ]
+    // };
+    user = widget.user;
     super.initState();
   }
 
