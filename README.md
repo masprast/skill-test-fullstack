@@ -167,9 +167,9 @@ Untuk melakukan pengetesan:
 - [x] Validasi input/payload
 - [x] SwaggerUI
 - [x] Chat REST API
-- Chat menggunakan websocket
-- Chat queue pd RabbitMQ
-- unit test
+- [ ] Chat menggunakan websocket
+- [ ] Chat queue pd RabbitMQ
+- [ ] unit test
 
 ## FRONTEND
 *Techstack* yang digunakan untuk *backend* antara lain:
@@ -187,7 +187,7 @@ Lalu buka alamat `localhost:8000` pada web browser
 - [x] Halaman Auth (Login & Register)
 - [x] Halaman user
 - [x] Halaman Chat
-- API connection
+- [ ] API connection
 
 ## UPDATE
 ## FRONTEND ( FLUTTER )
