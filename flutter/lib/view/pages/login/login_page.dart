@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_youapp/app/configs/constants/global_key.dart';
+import 'package:frontend_youapp/app/configs/enum/app_route.dart';
 import 'package:frontend_youapp/view/widgets/auth_page/auth_base.dart';
 import 'package:frontend_youapp/view/widgets/auth_page/auth_text_input.dart';
 
@@ -135,8 +137,14 @@ class _LoginPageState extends State<LoginPage> {
               isPassword: true,
               placeholder: 'password')
         ],
-        authProcess: () =>
-            print('${controllerUser.text} - ${controllerPass.text}'),
+        authProcess: () {
+          if (controllerUser.text == controllerPass.text) {
+            navigatorKey.currentState?.pushReplacementNamed(AppRoute.home.name);
+          } else {
+            messengerKey.currentState?.showSnackBar(const SnackBar(
+                content: Text('Password & username doesn\'t match')));
+          }
+        },
         isLogin: true);
   }
 }

@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
       scaffoldMessengerKey: messengerKey,
       navigatorKey: navigatorKey,
       onGenerateRoute: RouteService.routeService,
-      initialRoute: AppRoute.home.name,
+      initialRoute: AppRoute.login.name,
     );
   }
 }
