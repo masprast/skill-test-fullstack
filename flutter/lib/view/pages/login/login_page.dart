@@ -140,9 +140,6 @@ class _LoginPageState extends State<LoginPage> {
         authProcess: () {
           if (controllerUser.text == controllerPass.text) {
             navigatorKey.currentState?.pushReplacementNamed(AppRoute.home.name);
-          } else {
-            messengerKey.currentState?.showSnackBar(const SnackBar(
-                content: Text('Password & username doesn\'t match')));
           }
         },
         isLogin: true);

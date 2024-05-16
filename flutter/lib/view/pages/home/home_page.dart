@@ -212,7 +212,7 @@ final userincomplete = {
 final Map<String, dynamic> user = {
   "name": "@johndoe123",
   "username": '@johndoe',
-  'birthday': '23-4-2000',
+  'birthday': '2000-04-23',
   'horoscope': 'gemini',
   'zodiac': 'monkey',
   'age': '56',
