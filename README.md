@@ -1,4 +1,4 @@
-# SKILL TEST YOUAPP
+# SKILL TEST YOUAPP (updated)
 Ini adalah repositori untuk *skill test* dalam rangka proses rekrutmen sebagai *fullstack/backend developer*
 
 ## BACKEND
@@ -189,12 +189,13 @@ Lalu buka alamat `localhost:8000` pada web browser
 - [x] Halaman Chat
 - API connection
 
+## UPDATE
 ## FRONTEND ( FLUTTER )
 ### TODO
 - [x] working about page
 - [x] working login page
 - [x] working register page
-- [ ] home page
-- [ ] chat page
+- [x] home page
+- [x] chat page
 - [ ] API integration
 - [ ] save API data to local
