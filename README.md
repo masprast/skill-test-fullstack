@@ -199,3 +199,6 @@ Lalu buka alamat `localhost:8000` pada web browser
 - [x] chat page
 - [ ] API integration
 - [ ] save API data to local
+
+Untuk pengetesan:
+- username DAN pasword harus sama untuk dapat login
